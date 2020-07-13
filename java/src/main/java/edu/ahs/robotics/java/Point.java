@@ -33,8 +33,8 @@ public class Point {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Point point = (Point) o;
-        return Math.abs(Double.compare(point.x, x)) < 0.000001 &&
-                Math.abs(Double.compare(point.y, y)) < 0.000001;
+        return Math.abs(point.x-x) < 0.000001 &&
+                Math.abs(point.y- y) < 0.000001;
     }
 
     @Override

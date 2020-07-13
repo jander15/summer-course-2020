@@ -45,15 +45,60 @@ public class PathTest {
 
     @Test
     public void targetPoint() {
-        Point[] points = new Point[] {new Point(0,0), new Point(0,3), new Point(1,3), new Point(2,3), new Point(8,3)};
-        Point currentLocation = new Point(0.5,4);
-        double distanceAlongPath = 6.0;
+        Point[] points = new Point[] {new Point(3,4), new Point(5,5), new Point(6,6), new Point(9,10)};
+        Point currentLocation = new Point(0,0);
+        double distanceAlongPath = Math.sqrt(5)+Math.sqrt(2);
 
         Path path = new Path(points);
-
         Point actualPoint = path.targetPoint(currentLocation,distanceAlongPath).point;
 
-        assertEquals(new Point(6.5,3),actualPoint);
-
+        assertEquals(new Point(6,6),actualPoint);
     }
+
+    @Test
+    public void targetPointTest2() {
+        Point[] points = new Point[] {new Point(0,0), new Point(0,5), new Point(5,5), new Point(5,7)};
+        Point currentLocation = new Point(-2,-2);
+        double distanceAlongPath = 3;
+        Path path = new Path(points);
+        Point actualPoint = path.targetPoint2(currentLocation,distanceAlongPath).point;
+
+        assertEquals(new Point(0,1),actualPoint);
+    }
+
+    @Test
+    public void testDistanceToStartOfPath(){
+        Point[] points = new Point[] {new Point(0,0), new Point(0,3), new Point(4,0), new Point(4,8),new Point(0,9)};
+        Path path = new Path(points);
+
+        double actual1=path.getWayPoints().get(0).distanceFromStart;
+        assertEquals(0,actual1,0.00001);
+        double actual2=path.getWayPoints().get(1).distanceFromStart;
+        assertEquals(3,actual2,0.00001);
+        double actual3=path.getWayPoints().get(2).distanceFromStart;
+        assertEquals(8,actual3,0.00001);
+    }
+
+    @Test
+    public void testPathConstructionArgument() {
+        try {
+            Path path = new Path(new Point[]{new Point(1, 1)});
+            fail("it constructed a path with only one point...whoops");
+
+        } catch (IllegalArgumentException e) {
+            //what we expected
+        }
+    }
+        @Test
+        public void rejectInsufficientUniquePointsPath(){
+            try {
+                Path path = new Path(new Point[]{new Point(1, 1), new Point(1,1)});
+                fail("it constructed a path with only one point...whoops");
+
+            }catch(IllegalArgumentException e){
+                //what we expected
+            }
+    }
+
+
 }

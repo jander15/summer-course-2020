@@ -67,4 +67,24 @@ public class LineSegment {
         return distance;
     }
 
+    public Point closestPointOnLineSegment(Point current){
+
+        double distance = this.shortestDistance(current);
+
+        double ux=point2.x-point1.x;
+        double uy=point2.y-point1.y;
+
+        double uMagnitude = point2.distanceToPoint(point1);
+
+        double unitVectorX = uy/uMagnitude;
+        double unitVectorY = -ux/uMagnitude;
+
+        double finalX = current.x-distance*unitVectorX;
+        double finalY =current.y-distance*unitVectorY;
+
+        return new Point(finalX,finalY);
+
+
+    }
+
 }
